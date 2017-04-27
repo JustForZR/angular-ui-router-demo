@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myapp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	  <style>.active { color: red; font-weight: bolder; }</style>
+</head>
+<body ng-controller="myctrl">
+<a ui-sref="hello" ui-sref-active="active">hello</a>
+<a ui-sref="people" ui-sref-active="active">people</a>
+<div ui-view >
+	
+</div>
+	<script src="https://npmcdn.com/angular@latest/angular.js"></script>
+	<script src="https://npmcdn.com/angular-ui-router@1.0.0-alpha.4/release/angular-ui-router.js"></script>
+	<script type="text/javascript">
+		var myapp = angular.module('myapp', ["ui.router"]);
+
+		myapp.config(function ($urlRouterProvider,$stateProvider) {
+			var states = [
+				{
+					name:'hello',
+					url:'/hello',
+					component:'hello'
+				},
+				{
+					name:'people',
+					url:'/people',
+					template:'<h2> people</h2>'
+				}
+			]
+		
+			states.forEach(function(state) {
+			    $stateProvider.state(state);
+			  });
+		})
+		
+
+		myapp.component("hello",{
+			template:   "<h3>{{$ctrl.greeting}} Solar system</h3>"+
+						'<button ng-click="$ctrl.toggle()">toggle greeting</button>',
+						
+			controller:function(){
+				this.greeting = "hello";
+				this.toggle = function(){
+					this.greeting = (this.greeting == 'hello') ? 'whats up':'hello'
+				}
+			}
+		})
+		
+		myapp.controller("myctrl",function ($scope) {
+			
+
+		})
+	</script>
+</body>
+</html>
